@@ -17,7 +17,6 @@ export  function App() {
       <Route path="/trash" element={<h1>trash</h1>}/>
       <Route path="/markdown" element={<h1>markdown</h1>}/>
       <Route path="/trash" element={<h1>trash</h1>}/>
-      <Route path="/trash" element={<h1>trash</h1>}/>
     </Routes>
   </BrowserRouter>
   ) 

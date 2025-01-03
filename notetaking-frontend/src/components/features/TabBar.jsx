@@ -1,39 +1,59 @@
+import { memo } from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import {Link } from "react-router-dom";
-import SendIcon from '@mui/icons-material/Send';
+import { Link } from "react-router-dom";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
-//import ListItem from '@mui/material/ListItem';
-export default function TabBar({theme, tongleDrawer}){
-  return(
-  <Box position="fixed" sx={
-      { width: "20%",
-        height: "100%",
-        bgcolor: "background.default",
-        margin: "0",
-        "padding-top":"1%",
-        display: "block",
+import HomeIcon from '@mui/icons-material/Home';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { styled } from '@mui/material/styles';
 
-      }
-    }>
+const NavLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.text.primary,
+  width: '100%'
+}));
 
-      <List sx={{width: "100%", bgcolor: "background.paper", }}>
+const NavBox = styled(Box)(({ theme, isopen }) => ({
+  width: "20%",
+  height: `calc(100% - ${theme.mixins.toolbar.minHeight}px)`,
+  bgcolor: theme.palette.background.default,
+  margin: 0,
+  paddingTop: theme.spacing(1),
+  display: "block",
+  position: "fixed",
+  top: theme.mixins.toolbar.minHeight,
+  left: isopen ? 0 : '-20%',
+  overflow: 'auto',
+  transition: 'left 0.3s ease-in-out'
+}));
+
+const TabBar = ({ theme, isOpen }) => {
+  return (
+    <NavBox isopen={isOpen ? 1 : 0}>
+      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         <ListItemButton>
           <ListItemIcon>
-            <SendIcon  />
+            <HomeIcon />
           </ListItemIcon>
-            <Link to="/"> hone</Link>
+          <NavLink to="/">Home</NavLink>
         </ListItemButton>
 
         <ListItemButton>
           <ListItemIcon>
-            <SendIcon  />
+            <DeleteIcon />
           </ListItemIcon>
-
-            <Link to="/trash"> Trash</Link>
+          <NavLink to="/trash">Trash</NavLink>
         </ListItemButton>
-        </List>
-  </Box>
-  )
-} 
+      </List>
+    </NavBox>
+  );
+};
+
+TabBar.propTypes = {
+  theme: PropTypes.object,
+  isOpen: PropTypes.bool
+};
+
+export default memo(TabBar);
